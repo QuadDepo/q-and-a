@@ -2,11 +2,20 @@ import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { useInput } from "../../Core/Hooks/Input";
-import { isObjectEmpty } from "../../Core/Helpers";
+import { useCheckbox } from "../../Core/Hooks/Checkbox";
 
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
+  width: 100%;
+`;
+
+const FormFooter = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items center;
+  gap: 16px;
   width: 100%;
 `;
 
@@ -33,20 +42,23 @@ const Checkbox = styled.input``;
 
 const SubmitButton = styled.button``;
 
+const CancelButton = styled.button``;
+
 function QAForm({
   onSubmit = () => {},
-  initialState = { question: null, answer: null, checked: null },
+  onCancel = () => {},
+  initialState = { question: "", answer: "", checked: false },
+  type = "Add",
 }) {
   const [form, setForm] = useState(initialState);
-  const { value: question, bind: questionBind } = useInput(form.question);
-  const { value: answer, bind: answerBind } = useInput(form.answer);
-  const { value: checked, bind: checkedBind } = useInput(form.checked);
-
-  const submitLabel = isObjectEmpty(initialState) ? "Add" : "Edit";
+  // Connect Input Hooks
+  const { value: question, bind: bindQuestion } = useInput(form.question);
+  const { value: answer, bind: bindAnswer } = useInput(form.answer);
+  const { checked, bind: bindChecked } = useCheckbox(form.checked);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    onSubmit(e);
+    onSubmit(form, e);
   };
 
   useEffect(() => {
@@ -57,14 +69,17 @@ function QAForm({
     <FormWrapper onSubmit={onFormSubmit}>
       <code dangerouslySetInnerHTML={{ __html: JSON.stringify(form) }}></code>
       <Label>Question</Label>
-      <Input required="required" {...questionBind} />
+      <Input required="required" {...bindQuestion} />
       <Label>Answer</Label>
-      <TextArea required="required" {...answerBind} />
+      <TextArea required="required" {...bindAnswer} />
       <Label>
-        <Checkbox {...checkedBind} required="required" type="checkbox" />
+        <Checkbox {...bindChecked} required="required" type="checkbox" />
         Checkbox
       </Label>
-      <SubmitButton type="submit">{submitLabel}</SubmitButton>
+      <FormFooter>
+        <CancelButton onClick={onCancel}>Cancel</CancelButton>
+        <SubmitButton type="submit">{type}</SubmitButton>
+      </FormFooter>
     </FormWrapper>
   );
 }
