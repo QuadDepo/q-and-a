@@ -1,21 +1,34 @@
+import { useDispatch, use } from "react-redux";
 import { Col, Container } from "./index";
 import { Title } from "../Typography";
 import Header from "./Header";
 import QAForm from "../QAForm";
-import Carousel from "../Carousel";
+import CarouselWrapper from "../CarouselWrapper";
+import Tooltip from "../Tooltip";
 
 const Main = () => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Header />
       <Container>
         <Col xs={12} sm={12} md={6} lg={6}>
-          <Title>Add Q/A</Title>
-          <QAForm action="add"></QAForm>
+          <Tooltip title="Here you can add new Queston and answers">
+            <Title>Add Q/A</Title>
+          </Tooltip>
+          <QAForm
+            onSubmit={(form) =>
+              dispatch({
+                type: "ADD_QA_REQUEST",
+                payload: form,
+              })
+            }
+          ></QAForm>
         </Col>
         <Col xs={12} sm={12} md={6} lg={6}>
           <Title>Q/A's</Title>
-          <Carousel />
+          <CarouselWrapper />
         </Col>
       </Container>
     </>
