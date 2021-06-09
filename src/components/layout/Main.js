@@ -1,4 +1,4 @@
-import { useDispatch, use } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Col, Container } from "./index";
 import { Title } from "../Typography";
 import Header from "./Header";
