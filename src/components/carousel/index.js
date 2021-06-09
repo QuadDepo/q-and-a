@@ -68,6 +68,7 @@ function Carousel({ carouselItem }) {
   // Create refs
   const innerBody = useRef(null);
   const questionEditor = useRef(null);
+  const answerEditor = useRef(null);
 
   const toggleCarousel = () => {
     // Ignore toggle when edit mode is active
@@ -103,6 +104,7 @@ function Carousel({ carouselItem }) {
       payload: Q_and_A,
     });
 
+    // Stop editing when edit request is send
     setIsEdit(false);
   };
 
@@ -119,11 +121,12 @@ function Carousel({ carouselItem }) {
       </CarouselHeader>
       <CarouselBody isOpen={isOpen} ref={innerBody}>
         <CarouselContent
-          suppressContentEditableWarning={true}
-          contentEditable={isEdit}
-        >
-          {answer}
-        </CarouselContent>
+          innerRef={answerEditor}
+          tagName="p"
+          html={answer}
+          disabled={!isEdit}
+          onChange={(e) => onContentChange(e, "answer")}
+        ></CarouselContent>
         {!isEdit && (
           <CarouselFooter>
             <ButtonDelete onClick={deleteCarousel}>Delete</ButtonDelete>
