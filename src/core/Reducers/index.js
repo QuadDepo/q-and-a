@@ -39,7 +39,7 @@ export const QA_Reducer = (
           item.uuid === action.item.uuid ? action.item : item
         ),
       };
-    case ACTION_TYPE.DELETE_QA_FAILURE:
+    case ACTION_TYPE.EDIT_QA_FAILURE:
       return { ...state, loading: false, error: true };
     // DELETE QA Reducer
     case ACTION_TYPE.DELETE_QA_REQUEST:
