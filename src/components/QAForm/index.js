@@ -21,9 +21,16 @@ const FormFooter = styled.div`
 `;
 
 const Label = styled.label`
-  display: block;
-  padding: 4px;
-  font-size: 12px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 10px;
+`;
+
+const InputWrapper = styled.div`
+  & + & {
+    margin-top: 8px;
+  }
 `;
 
 const Input = styled.input`
@@ -39,7 +46,11 @@ const TextArea = styled.textarea`
   resize: vertical;
 `;
 
-const Checkbox = styled.input``;
+const Checkbox = styled.input`
+  width: 24px;
+  height: 24px;
+  margin: 0 8px 0 0;
+`;
 
 function QAForm({
   onSubmit = () => {},
@@ -63,15 +74,20 @@ function QAForm({
 
   return (
     <FormWrapper onSubmit={onFormSubmit}>
-      <code dangerouslySetInnerHTML={{ __html: JSON.stringify(form) }}></code>
-      <Label>Question</Label>
-      <Input required="required" {...bindQuestion} />
-      <Label>Answer</Label>
-      <TextArea required="required" {...bindAnswer} />
-      <Label>
-        <Checkbox {...bindChecked} type="checkbox" />
-        Checkbox
-      </Label>
+      <InputWrapper>
+        <Label>Question</Label>
+        <Input required="required" {...bindQuestion} />
+      </InputWrapper>
+      <InputWrapper>
+        <Label>Answer</Label>
+        <TextArea required="required" {...bindAnswer} />
+      </InputWrapper>
+      <InputWrapper>
+        <Label>
+          <Checkbox {...bindChecked} type="checkbox" />
+          Want to wait extra long?
+        </Label>
+      </InputWrapper>
       <FormFooter>
         <ButtonSecondary onClick={onCancel}>Clear</ButtonSecondary>
         <ButtonPrimary type="submit">Add</ButtonPrimary>
