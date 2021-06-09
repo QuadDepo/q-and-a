@@ -1,7 +1,17 @@
 import * as ACTION_TYPE from "../Consts";
 
 export const QA_Reducer = (
-  state = { qa_list: [], error: false, loading: false },
+  state = {
+    qa_list: [
+      {
+        uuid: 1,
+        question: "Did I do the assignment correctly?",
+        answer: "Maybe....?",
+      },
+    ],
+    error: false,
+    loading: false,
+  },
   action
 ) => {
   switch (action.type) {

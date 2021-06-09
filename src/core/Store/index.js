@@ -14,8 +14,6 @@ const Store = createStore(
 
 SagaMiddleware.run(rootSaga);
 
-console.log(Store);
-
 Store.subscribe(() => {
   saveToLocalStorage(Store.getState());
   console.log(Store.getState());
