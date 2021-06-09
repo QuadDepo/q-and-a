@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import styled from "styled-components";
 
 const TooltipWrapper = styled.div`
@@ -10,6 +10,7 @@ const TooltipWrapper = styled.div`
 
 const TooltipContent = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 
 const TooltipInner = styled.div`
@@ -18,7 +19,7 @@ const TooltipInner = styled.div`
   align-items: center;
   position: absolute;
   left: 0%;
-  top: -7px;
+  top: ${(props) => `-${props.height}px`};
   z-index: 2;
   height: 100%;
   max-height: 50px;
@@ -40,7 +41,10 @@ const TooltipArrow = styled.div`
 
 function Tooltip({ title, position = "top", children }) {
   const tooltipNode = useRef();
+  const tooltipArrow = useRef();
+  const tooltipContent = useRef();
   const [isOpen, setOpen] = useState(false);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     // Add event when mounted
@@ -52,8 +56,20 @@ function Tooltip({ title, position = "top", children }) {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    if (!isOpen) return;
+
+    const tooltip = tooltipNode?.current;
+    const arrow = tooltipArrow?.current;
+
+    setHeight(tooltip.offsetHeight + arrow.offsetHeight);
+  }, [isOpen]);
+
   const handleClick = ({ target }) => {
-    if (tooltipNode?.current?.contains(target)) {
+    if (
+      tooltipNode?.current?.contains(target) ||
+      tooltipContent?.current?.contains(target)
+    ) {
       return;
     }
 
@@ -63,12 +79,12 @@ function Tooltip({ title, position = "top", children }) {
   return (
     <TooltipWrapper>
       {isOpen && (
-        <TooltipInner ref={tooltipNode} position={position}>
+        <TooltipInner height={height} ref={tooltipNode} position={position}>
           {title}
-          <TooltipArrow />
+          <TooltipArrow ref={tooltipArrow} />
         </TooltipInner>
       )}
-      <TooltipContent onClick={() => setOpen(!isOpen)}>
+      <TooltipContent ref={tooltipContent} onClick={() => setOpen(true)}>
         {children}
       </TooltipContent>
     </TooltipWrapper>
