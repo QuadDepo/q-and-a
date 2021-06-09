@@ -54,18 +54,38 @@ const Checkbox = styled.input`
 
 function QAForm({
   onSubmit = () => {},
-  onCancel = () => {},
   initialState = { question: "", answer: "", checked: false },
 }) {
   const [form, setForm] = useState(initialState);
   // Connect Input Hooks
-  const { value: question, bind: bindQuestion } = useInput(form.question);
-  const { value: answer, bind: bindAnswer } = useInput(form.answer);
-  const { checked, bind: bindChecked } = useCheckbox(form.checked);
+  const {
+    value: question,
+    bind: bindQuestion,
+    reset: resetQuestion,
+  } = useInput(form.question);
+
+  const {
+    value: answer,
+    bind: bindAnswer,
+    reset: resetAnswer,
+  } = useInput(form.answer);
+  const {
+    checked,
+    bind: bindChecked,
+    reset: resetChecked,
+  } = useCheckbox(form.checked);
 
   const onFormSubmit = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     onSubmit(form, e);
+    clearForm();
+  };
+
+  const clearForm = (e) => {
+    e && e.preventDefault();
+    resetQuestion();
+    resetAnswer();
+    resetChecked();
   };
 
   useEffect(() => {
@@ -89,7 +109,7 @@ function QAForm({
         </Label>
       </InputWrapper>
       <FormFooter>
-        <ButtonSecondary onClick={onCancel}>Clear</ButtonSecondary>
+        <ButtonSecondary onClick={clearForm}>Clear</ButtonSecondary>
         <ButtonPrimary type="submit">Add</ButtonPrimary>
       </FormFooter>
     </FormWrapper>
