@@ -1,7 +1,8 @@
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import ContentEditable from "react-contenteditable";
 import styled from "styled-components";
+import { ButtonPrimary, ButtonSecondary, ButtonDelete } from "../Button";
 
 const CarouselWrapper = styled.div`
   display: flex;
@@ -56,25 +57,6 @@ const CaraouselTitle = styled(ContentEditable)`
   border: ${(props) => (!props.disabled ? "1px solid #b8b8b8" : "none")};
 `;
 
-const CarouselButton = styled.button`
-  border: none;
-  color: white;
-  padding: 7px 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 2px;
-  cursor: pointer;
-`;
-
-const CarouselButtonPrimary = styled(CarouselButton)`
-  background-color: #3498db;
-`;
-const CarouselButtonSecondary = styled(CarouselButton)`
-  color: #3498db;
-`;
-
 function Carousel({ carouselItem }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -124,10 +106,6 @@ function Carousel({ carouselItem }) {
     setIsEdit(false);
   };
 
-  useLayoutEffect(() => {
-    console.log(innerBody.current.scrollHeight);
-  }, [isOpen]);
-
   return (
     <CarouselWrapper>
       <CarouselHeader isOpen={isOpen} onClick={toggleCarousel}>
@@ -148,23 +126,15 @@ function Carousel({ carouselItem }) {
         </CarouselContent>
         {!isEdit && (
           <CarouselFooter>
-            <CarouselButtonSecondary onClick={deleteCarousel}>
-              Delete
-            </CarouselButtonSecondary>
-            <CarouselButtonPrimary onClick={toggleEdit}>
-              Edit
-            </CarouselButtonPrimary>
+            <ButtonDelete onClick={deleteCarousel}>Delete</ButtonDelete>
+            <ButtonPrimary onClick={toggleEdit}>Edit</ButtonPrimary>
           </CarouselFooter>
         )}
 
         {isEdit && (
           <CarouselFooter>
-            <CarouselButtonSecondary onClick={toggleEdit}>
-              Cancel
-            </CarouselButtonSecondary>
-            <CarouselButtonPrimary onClick={saveCarousel}>
-              Save
-            </CarouselButtonPrimary>
+            <ButtonSecondary onClick={toggleEdit}>Cancel</ButtonSecondary>
+            <ButtonPrimary onClick={saveCarousel}>Save</ButtonPrimary>
           </CarouselFooter>
         )}
       </CarouselBody>

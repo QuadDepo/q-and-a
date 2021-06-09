@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useInput } from "../../Core/Hooks/Input";
 import { useCheckbox } from "../../Core/Hooks/Checkbox";
+import { ButtonPrimary, ButtonSecondary, ButtonDelete } from "../Button";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -40,15 +41,10 @@ const TextArea = styled.textarea`
 
 const Checkbox = styled.input``;
 
-const SubmitButton = styled.button``;
-
-const CancelButton = styled.button``;
-
 function QAForm({
   onSubmit = () => {},
   onCancel = () => {},
   initialState = { question: "", answer: "", checked: false },
-  type = "Add",
 }) {
   const [form, setForm] = useState(initialState);
   // Connect Input Hooks
@@ -77,8 +73,8 @@ function QAForm({
         Checkbox
       </Label>
       <FormFooter>
-        <CancelButton onClick={onCancel}>Cancel</CancelButton>
-        <SubmitButton type="submit">{type}</SubmitButton>
+        <ButtonSecondary onClick={onCancel}>Clear</ButtonSecondary>
+        <ButtonPrimary type="submit">Add</ButtonPrimary>
       </FormFooter>
     </FormWrapper>
   );
