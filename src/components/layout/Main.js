@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { ADD_QA_REQUEST } from "../../Core/Consts";
 import styled from "styled-components";
 import { Col, Container } from "./index";
 import { Title } from "../Typography";
@@ -40,6 +41,13 @@ const Main = () => {
     setOrder(sortingOption);
   };
 
+  const onFormSubmit = (form) => {
+    dispatch({
+      type: ADD_QA_REQUEST,
+      payload: form,
+    });
+  };
+
   return (
     <>
       <Header />
@@ -48,17 +56,12 @@ const Main = () => {
           <Tooltip title="Here you can add new Queston and answers">
             <Title>Add Q/A</Title>
           </Tooltip>
-          <QAForm
-            onSubmit={(form) =>
-              dispatch({
-                type: "ADD_QA_REQUEST",
-                payload: form,
-              })
-            }
-          ></QAForm>
+          <QAForm onSubmit={onFormSubmit}></QAForm>
         </Col>
         <Col xs={12} sm={12} md={6} lg={6}>
-          <Title>Q/A's</Title>
+          <Tooltip title="Here you can add new Queston and answers">
+            <Title>Q/A's List</Title>
+          </Tooltip>
           <SortingSelect onChange={onOrderChanged}>
             {sortingOptions.map(({ key, direction, label }) => (
               <option value={`${key}-${direction}`}>{label}</option>
