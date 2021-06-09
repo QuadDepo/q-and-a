@@ -18,7 +18,7 @@ const Logo = styled.h1`
 
 const MainHeader = styled(Row)`
   background: #000;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
 `;
 
 export default function Header() {
