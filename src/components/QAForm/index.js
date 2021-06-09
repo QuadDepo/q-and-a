@@ -73,7 +73,7 @@ function QAForm({
       <Label>Answer</Label>
       <TextArea required="required" {...bindAnswer} />
       <Label>
-        <Checkbox {...bindChecked} required="required" type="checkbox" />
+        <Checkbox {...bindChecked} type="checkbox" />
         Checkbox
       </Label>
       <FormFooter>
