@@ -30,12 +30,12 @@ const CarouselBody = styled.div`
   overflow: hidden;
 `;
 
-const CarouselContent = styled.p`
+const CarouselContent = styled(ContentEditable)`
   font-size: 16px;
   margin: 16px;
   outline: none;
   border-radius: 8px;
-  background: #fff;
+  background: ${(props) => (!props.disabled ? "#fff" : "transparent")};
   padding: ${(props) => (!props.disabled ? "16px" : 0)};
   border: ${(props) => (!props.disabled ? "1px solid #b8b8b8" : "none")};
 `;
