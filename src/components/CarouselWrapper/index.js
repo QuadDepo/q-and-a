@@ -22,8 +22,6 @@ function CarouselWrapper(props) {
   const [items, setItems] = useState(qa_list);
 
   useEffect(() => {
-    if (qa_list.length === 0) return;
-
     const orderedItems = qa_list.sort((a, b) => {
       if (order.direction === "ASC")
         return a[order.key].localeCompare(b[order.key]);
