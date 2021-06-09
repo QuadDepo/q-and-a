@@ -63,8 +63,10 @@ const Main = () => {
             <Title>Q/A's List</Title>
           </Tooltip>
           <SortingSelect onChange={onOrderChanged}>
-            {sortingOptions.map(({ key, direction, label }) => (
-              <option value={`${key}-${direction}`}>{label}</option>
+            {sortingOptions.map(({ key, direction, label }, i) => (
+              <option key={i} value={`${key}-${direction}`}>
+                {label}
+              </option>
             ))}
           </SortingSelect>
           <CarouselWrapper order={order} />
