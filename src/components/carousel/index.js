@@ -18,6 +18,7 @@ const CarouselHeader = styled.div`
   width: 100%;
   padding: 8px 16px;
   box-sizing: border-box;
+  cursor: pointer;
   border-radius: ${(props) => (props.isOpen ? "8px 8px 0 0" : "8px")};
   background: #bdc3c7;
 `;
